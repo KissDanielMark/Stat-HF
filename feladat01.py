@@ -11,6 +11,7 @@ def main():
 
     # Step 2: Extract the independent and dependent variables
     X = data[["Üzenet hossza", "Mosolygós emojik száma"]]
+    X = sm.add_constant(X)  # Állandó hozzáadása a modellhez
     y = data["Boldogságszint"]
 
     model = sm.OLS(y, X).fit()
@@ -29,13 +30,13 @@ def main():
     print("P-érték:", shapiro_test_p_value)
 
     # 4. feladat: Paraméterek intervallumbecslése
-    """conf_int = model.conf_int()
+    conf_int = model.conf_int()
     print("Paraméterek 95%-os megbízhatósági intervallumai:")
-    print(conf_int"""
+    print(conf_int)
 
     # 5. feladat: Előrejelzés és intervallumbecslés
-    """uj_uzenet = pd.DataFrame(
-        {"const": 1, "UzenetHossza": [130], "MosolygosEmojikSzama": [3]}
+    uj_uzenet = pd.DataFrame(
+        {"const": 1, "Üzenet hossza": [130], "Mosolygós emojik száma": [3]}
     )
     predict_value = model.get_prediction(uj_uzenet).summary_frame()
     print("Előrejelzés:", predict_value["mean"][0])
@@ -44,7 +45,7 @@ def main():
         predict_value["mean_ci_lower"][0],
         "-",
         predict_value["mean_ci_upper"][0],
-    )"""
+    )
 
 
 main()
