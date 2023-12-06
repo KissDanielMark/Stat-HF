@@ -1,6 +1,6 @@
 \documentclass[11pt,a4paper,oneside]{report}   
 \usepackage{listings}
-\linespread{1.5}
+\linespread{1.0}
 \input{preamble}
 \usepackage{graphicx}
 \graphicspath{ {./images/} }
@@ -31,29 +31,7 @@ A bead11.1.csv fájl négy oszlopot tartalmaz: "Sorszám," "Üzenet hossza," "Mo
 A lineáris regresszió célja az, hogy a függő változót (pl. Boldogságszint) lineáris kapcsolatban álló magyarázó változókkal (pl. Üzenet hossza, Mosolygós emojik száma) modellezze.
 
 A lineáris regresszió modellje általánosan a következő alakú:
-Y=B0+B1X1+B2X2+E
-
-Python kód:
-\begin{lstlisting}[language=Python,texcl=true]
-import pandas as pd
-import statsmodels.api as sm
-from scipy.stats import shapiro
-
-def main():
-  """The main function of the program."""
-  # 1.lepes: Adatok beolvasasa
-  data = pd.read_csv("bead11.1.csv")
-
-  # 2.lepes: Magyarazo valtozok es a celvaltozo kivalasztasa
-  X = data[["Uzenet hossza", "Mosolygos emojik szama"]]
-  X = sm.add_constant(X)  # Allando hozzaadasa a magyarazo valtozokhoz
-  y = data["Boldogsagszint"] #Celvaltozo kivalasztasa
-
-  model = sm.OLS(y, X).fit()
-
-  # Regresszios modell parametereinek kiirasa
-  print(model.summary())
-\end{lstlisting}
+Y=B0+B1X1+B2X2+E.
 
 Kimenet értelmezése:
 \begin{figure}[!ht]
@@ -87,17 +65,6 @@ Az adott kimenetben a F-statistic értéke 157.5, és a hozzá tartozó p-érté
 Adj intervallumbecslést 95\%-os megbizhatósággal paraméterekre!
 
 Megoldás:
-Az "alpha=0.05" paraméter megadja a 95\%-os megbízhatósági szintet.
-Python kód:
-\begin{lstlisting}[language=Python,texcl=true]
-...
-  # 4.lepes: Intervallumbecslés
-  print(model.conf_int(alpha=0.05))
-...
-\end{lstlisting}
-
-Kimenet értelmezése:
-
 Az intervallumok azt mutatják, hogy a konstans érték (const) becslési intervalluma 4.493509 és 6.016082 között van,
 az Üzenet hossza becslési intervalluma -0.001479 és 0.016810 között van,
 míg a Mosolygós emojik száma becslési intervalluma 0.166219 és 0.447623 között van.
@@ -121,24 +88,7 @@ Ezek az intervallumok segíthetnek abban, hogy becsüljük a paraméterek érté
 \section{e) feladat}
 Készíts előrejelzést az új üzenetek boldogságszintjére, ha az üzenet hossza 130 karakter,  és a mosolygós emojik száma 3. Illetve adj ugyanerre 95\%-os megbízhatóságú intervallumbecslést is.
 
-Megodlás:
-\begin{lstlisting}[language=Python,texcl=true]
-  ...
-  # 5. feladat: Elorejelzes es intervallumbecsles
-    uj_uzenet = pd.DataFrame(
-        {"const": 1, "Uzenet hossza": [130], "Mosolygos emojik szama": [3]}
-    )
-    predict_value = model.get_prediction(uj_uzenet).summary_frame()
-    print("Elorejelzes:",predict_value["mean"][0])
-    print(
-        "95%-os megbizhatosagu intervallum:",
-        predict_value["mean_ci_lower"][0],
-        "-",
-        predict_value["mean_ci_upper"][0],
-    )
-\end{lstlisting}
-
-Kimenet értelmezése:
+Megoldás:
 Előrejelzés: 7.172034019616269
 95\%-os megbízhatóságú intervallum: 7.09557490761663 - 7.248493131615907
 
@@ -154,6 +104,13 @@ A következő kutatás arra irányult, hogy mérje a mosolygós emojik használa
 Teszteld le, hogy van-e szignifikáns különbség a mosolygós emojik használatának gyakoriságában a különböző csoportokban (E = 0,05 szignifikanciaszinten)!
 
 Megoldás:
+Ahhoz, hogy leellenőrizzük, van-e szignifikáns különbség a mosolygós emojik használatának gyakoriságában a különböző csoportokban, statisztikai tesztet kell alkalmazni.
+A leggyakrabban használt teszt a kétváltozós t-próba. Azonban, mivel itt több csoportról van szó, egy análízis varianciát (ANOVA) is érdemes megfontolni.
+
+Kimenet értelmezése:
+Statisztika: 25.558435652569365, p-érték: 5.339953301217143e-14
+Van szignifikáns különbség a csoportok között a mosolygós emojik használatában.
+A kapott statisztika és p-érték alapján, azt mondhatjuk, hogy van szignifikáns különbség a csoportok között a mosolygós emojik használatában. A p-érték rendkívül kicsi, jóval kisebb az elfogadható 0.05 szignifikanciaszintnél. Ez azt sugallja, hogy a csoportok közötti különbség valószínűleg nem véletlen, és a mosolygós emojik használata szignifikánsan eltérő a csoportokban.
 
 \chapter{3.feladat}
 A bead11.3.csv file egy felmérés adatait mutatja a mosolygós emojik használatának változásáról az elmúlt években egy adott online fórumon.
