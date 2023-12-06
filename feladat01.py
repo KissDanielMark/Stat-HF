@@ -5,13 +5,13 @@ from scipy.stats import shapiro
 
 def main():
     """The main function of the program."""
-    # Step 1: Read the dataset from the CSV file
+    # 1.lépés_ Adatok beolvasása
     data = pd.read_csv("bead11.1.csv")
 
-    # Step 2: Extract the independent and dependent variables
+    # 2.lépés: Magyarázó változók és a célváltozó kiválasztása
     X = data[["Üzenet hossza", "Mosolygós emojik száma"]]
-    X = sm.add_constant(X)  # Állandó hozzáadása a modellhez
-    y = data["Boldogságszint"]
+    X = sm.add_constant(X)  # Állandó hozzáadása a magyarázó változókhoz
+    y = data["Boldogságszint"]  # Célváltozó kiválasztása
 
     model = sm.OLS(y, X).fit()
 
@@ -21,12 +21,6 @@ def main():
     # 2. feladat: Többszörös determinációs együttható kiszámítása
     rsq = model.rsquared
     print("Többszörös determinációs együttható:", rsq)
-
-    # 3. feladat: Regressziós modell megbízhatóságának tesztelése
-    residuals = model.resid
-    shapiro_test_stat, shapiro_test_p_value = shapiro(residuals)
-    print("Shapiro-Wilk teszt statisztika:", shapiro_test_stat)
-    print("P-érték:", shapiro_test_p_value)
 
     # 4. feladat: Paraméterek intervallumbecslése
     conf_int = model.conf_int()
