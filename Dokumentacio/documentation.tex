@@ -3,6 +3,7 @@
 \linespread{1.0}
 \input{preamble}
 \usepackage{graphicx}
+\usepackage{subfig}
 \graphicspath{ {./images/} }
 
 \title{\Huge{MSc - Statisztika}\\Házi feladat}
@@ -13,7 +14,6 @@
 
 \maketitle
 \newpage
-\tableofcontents
 \pagebreak
 
 \chapter{1. feladat}
@@ -120,20 +120,13 @@ Készíts idősor diagramot az adatok alapján, majd számold ki a tapasztalati 
 
 Megoldás:
 
-\begin{figure}[!ht]
-  \begin{center}
-    \includegraphics[scale=0.4]{Figure_1.png}
-    \caption{Feladat 3/a kimenet}
-    \label{fig:TexnicCenter}
-  \end{center}
-\end{figure}
-
-\begin{figure}[!ht]
-  \begin{center}
-    \includegraphics[scale=0.4]{Figure_2.png}
-    \caption{Feladat 3/a kimenet}
-    \label{fig:TexnicCenter}
-  \end{center}
+\begin{figure}%
+  \centering
+  \subfloat[\centering Feladat 3/a kimenet]{{\includegraphics[width=7cm]{Figure_1.png} }}%
+  \qquad
+  \subfloat[\centering Feladat 3/a kimenet]{{\includegraphics[width=7cm]{Figure_2.png} }}%
+  \caption{Feladat 3/a kimenetei}%
+  \label{fig:example}%
 \end{figure}
 
 \begin{figure}[!ht]
@@ -148,20 +141,13 @@ Az adatok transzformációjával és a trend, valamint a szezonális komponensek
 
 Megoodlás:
 
-\begin{figure}[!ht]
-  \begin{center}
-    \includegraphics[scale=0.4]{Figure_4.png}
-    \caption{Feladat 3/b kimenet}
-    \label{fig:TexnicCenter}
-  \end{center}
-\end{figure}
-
-\begin{figure}[!ht]
-  \begin{center}
-    \includegraphics[scale=0.4]{Figure_5.png}
-    \caption{Feladat 3/b kimenet}
-    \label{fig:TexnicCenter}
-  \end{center}
+\begin{figure}%
+  \centering
+  \subfloat[\centering Feladat 3/b kimenet]{{\includegraphics[width=7cm]{Figure_4.png} }}%
+  \qquad
+  \subfloat[\centering Feladat 3/b kimenet]{{\includegraphics[width=7cm]{Figure_5.png} }}%
+  \caption{Feladat 3/b kimenetei}%
+  \label{fig:example}%
 \end{figure}
 
 \section{c) feladat}
@@ -176,6 +162,5 @@ Megoldás:
     \label{fig:TexnicCenter}
   \end{center}
 \end{figure}
-
 
 \end{document}
