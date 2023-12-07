@@ -2,8 +2,11 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from statsmodels.tsa.stattools import acf, pacf
 from statsmodels.tsa.statespace.sarimax import SARIMAX
+from statsmodels.tsa.seasonal import STL
 import statsmodels.api as sm
 from statsmodels.graphics.tsaplots import plot_acf, plot_pacf
+from statsmodels.tsa.seasonal import seasonal_decompose
+from statsmodels.tsa.holtwinters import ExponentialSmoothing
 
 
 def main():
@@ -14,7 +17,7 @@ def main():
     data["Év-hónap"] = pd.to_datetime(data["Év-hónap"])
     data.set_index("Év-hónap", inplace=True)
 
-    # Idősor diagram
+    # 3/a Idősor diagram-------------------------------------------------------
     plt.figure(figsize=(10, 6))
     plt.plot(data["Mosolygós emojik használata (darab)"], marker="o")
     plt.title("Mosolygós emojik használata az évek során")
@@ -40,46 +43,42 @@ def main():
     plt.ylabel("Parciális autokorreláció")
     plt.show()
 
-    # Szezonális dekompozíció
+    # 3/b --------------------------------------------------------------------------------------------------------------
+
+    # Adatok megjelenítése
+    """plt.figure(figsize=(12, 6))
+    plt.plot(data["Mosolygós emojik használata (darab)"], label="Eredeti adatok")
+    plt.title("Mosolygós emojik használata az idő függvényében")
+    plt.legend()
+    plt.show()"""
+
+    # Holt-Winters Exponential Smoothing model
+    model = ExponentialSmoothing(
+        data["Mosolygós emojik használata (darab)"], seasonal="add", seasonal_periods=12
+    )
+    fit = model.fit()
+
+    # Illeszkedés vizsgálata
+    plt.figure(figsize=(12, 6))
+    plt.plot(data["Mosolygós emojik használata (darab)"], label="Eredeti adatok")
+    plt.plot(fit.fittedvalues, color="red", label="Illeszkedett model")
+    plt.title("Holt-Winters Exponential Smoothing illesztése")
+    plt.legend()
+    plt.show()
+
     result = sm.tsa.seasonal_decompose(
         data["Mosolygós emojik használata (darab)"], model="additive", period=12
     )
-    trend = result.trend.dropna()
-    seasonal = result.seasonal.dropna()
     residual = result.resid.dropna()
-
-    # Ábrázolás
-    plt.figure(figsize=(14, 10))
-
-    plt.subplot(4, 1, 1)
-    plt.plot(data["Mosolygós emojik használata (darab)"], label="Eredeti")
-    plt.legend()
-
-    plt.subplot(4, 1, 2)
-    plt.plot(trend, label="Trend")
-    plt.legend()
-
-    plt.subplot(4, 1, 3)
-    plt.plot(seasonal, label="Szezonális")
-    plt.legend()
-
-    plt.subplot(4, 1, 4)
-    plt.plot(residual, label="Reziduális")
-    plt.legend()
-
-    plt.show()
 
     # ARIMA modell illesztése a reziduálisokra
     order = (1, 1, 1)  # Példaérték, a modellrend megválasztása
     model = sm.tsa.ARIMA(residual, order=order)
     results = model.fit()
-
     # Illesztés eredményeinek megjelenítése
     print(results.summary())
-
     # Illesztett értékek kiszámítása
     fitted_values = results.fittedvalues
-
     # Illesztett és eredeti értékek összehasonlítása
     plt.figure(figsize=(10, 6))
     plt.plot(residual, label="Eredeti reziduálisok")
@@ -88,22 +87,30 @@ def main():
     plt.title("ARIMA Modell illesztése a reziduálisokra")
     plt.show()
 
-    # Előrejelzés a következő hónapokra
-    forecast_steps = 12
-    forecast = results.get_forecast(steps=forecast_steps)
-    forecast_index = pd.date_range(
-        data.index[-1], periods=forecast_steps + 1, freq="M"
-    )[1:]
+    # 3/c --------------------------------------------------------------------------------------------------------------
+    # Jövőbeli hónapokra történő előrejelzés
+    future_months = 6  # Válaszd meg, hány hónapot szeretnél előrejelzést készíteni
+    forecast = fit.forecast(steps=future_months)
 
-    # Előrejelzés megjelenítése
-    plt.figure(figsize=(10, 6))
-    plt.plot(data["Mosolygós emojik használata (darab)"], label="Tényleges adatok")
-    plt.plot(forecast_index, forecast.predicted_mean, color="red", label="Előrejelzés")
-    plt.title("Mosolygós emojik használata és előrejelzés")
-    plt.xlabel("Dátum")
-    plt.ylabel("Emoji használat (darab)")
+    # Eredeti és előrejelzett adatok megjelenítése
+    plt.figure(figsize=(12, 6))
+    plt.plot(data["Mosolygós emojik használata (darab)"], label="Eredeti adatok")
+    plt.plot(fit.fittedvalues, color="red", label="Illeszkedett model")
+    plt.plot(
+        fit.forecast(steps=future_months),
+        linestyle="dashed",
+        color="green",
+        label=f"{future_months} hónap előrejelzés",
+    )
+    plt.title(
+        "Holt-Winters Exponential Smoothing model - Előrejelzés a mosolygós emojik használatára"
+    )
     plt.legend()
     plt.show()
+
+    # Előrejelzött értékek kinyomtatása
+    print("Előrejelzés a következő hónapokra:")
+    print(forecast)
 
 
 main()
