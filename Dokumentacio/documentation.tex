@@ -42,7 +42,7 @@ Kimenet értelmezése:
   \end{center}
 \end{figure}
 Az alábbi kimenet a Figure 1.1-en látható. Az R-négyzet érték azt mutatja, hogy a modell mennyire magyarázza a függő változó (Boldogságszint) változását. Az 0.870 érték azt jelenti, hogy a modell 87\%-ban magyarázza a változást.
-P \> abs(t) (szignifikanciaszint): Az egyes együtthatók (const, Üzenet hossza, Mosolygós emojik száma) szignifikanciaszintje. Az értékek alattuk a p-értékeket jelentik. Azok az együtthatók, amelyek p-értéke kevesebb, mint 0.05, szignifikánsak a 0.05 szignifikanciaszinten. Ebben a modellben mind a const (konstans), mind a Mosolygós emojik száma szignifikáns, mivel a p-értékük kisebb, mint 0.05.
+P \> abs(t) (szignifikanciaszint): Az egyes együtthatók (const, Üzenet hossza, Mosolygós emojik száma) szignifikanciaszintje. Az értékek alattuk a p-értékeket jelentik. Azok az együtthatók, amelyek p-értéke kevesebb, mint 0.05, szignifikánsak a 0.05 szignifikanciaszinten. Ebben a modellben mind a const, mind a Mosolygós emojik száma szignifikáns, mivel a p-értékük kisebb, mint 0.05.
 Összességében ez azt jelenti, hogy a modell jól teljesít a magyarázatokban, és mind a konstans, mind a Mosolygós emojik szám változói szignifikánsan kapcsolódnak a Boldogságszint változóhoz.
 \section{b) feladat}
 Határozd meg és értelmezd a többszörös determináiós együtthatót!
@@ -68,7 +68,6 @@ Megoldás:
 Az intervallumok azt mutatják, hogy a konstans érték (const) becslési intervalluma 4.493509 és 6.016082 között van,
 az Üzenet hossza becslési intervalluma -0.001479 és 0.016810 között van,
 míg a Mosolygós emojik száma becslési intervalluma 0.166219 és 0.447623 között van.
-Ezek az intervallumok segíthetnek abban, hogy becsüljük a paraméterek értékeinek megbízhatóságát és azt, mennyire pontosak a becslések.
 
 \begin{tabular}{|c|c|c|}
   \hline
@@ -104,13 +103,21 @@ A következő kutatás arra irányult, hogy mérje a mosolygós emojik használa
 Teszteld le, hogy van-e szignifikáns különbség a mosolygós emojik használatának gyakoriságában a különböző csoportokban (E = 0,05 szignifikanciaszinten)!
 
 Megoldás:
-Ahhoz, hogy leellenőrizzük, van-e szignifikáns különbség a mosolygós emojik használatának gyakoriságában a különböző csoportokban, statisztikai tesztet kell alkalmazni.
-A leggyakrabban használt teszt a kétváltozós t-próba. Azonban, mivel itt több csoportról van szó, egy análízis varianciát (ANOVA) is érdemes megfontolni.
+Mielőtt statisztikai tesztet alkalmazom, megvizsgáltam a normalitást.
+Ehhez Shapiro-Wilk tesztet használtam. A p-érték alapján meghatározható, hogy az adott csoport normális eloszlású-e vagy sem.
+Ha a p-érték nagyobb, mint az alpha (0.05), akkor elfogadjuk a nullhipotézist, ami azt jelenti, hogy az adott csoport normális eloszlású.
+Ellenkező esetben elutasítjuk a nullhipotézist, és azt adott csoport nem normális eloszlású. A négy csoport közül egyik sem normális eloszlású, mivel a p-érték mindig kisebb, mint 0.05.
+
+Ezt követően homogenitást kell ellenőrizni. Ehhez Levene tesztet használtam. A p-érték alapján eldönthetjük, hogy az adott csoportok varianciája azonos-e vagy sem.
+A teszt eredménye alapján a p-érték mindig nagyobb, mint 0.05, ami azt jelenti, hogy az adott csoportok varianciája azonos, azaz elfogadjuk a nullhipotézist és homogének az adatok.
+
+Ahhoz, hogy leellenőrizzem, van-e szignifikáns különbség a mosolygós emojik használatának gyakoriságában a különböző csoportokban, statisztikai tesztet kell alkalmazni.
+Mivel itt több csoportról van szó, egy análízis varianciát (ANOVA) használtam.
 
 Kimenet értelmezése:
 Statisztika: 25.558435652569365, p-érték: 5.339953301217143e-14
 Van szignifikáns különbség a csoportok között a mosolygós emojik használatában.
-A kapott statisztika és p-érték alapján, azt mondhatjuk, hogy van szignifikáns különbség a csoportok között a mosolygós emojik használatában. A p-érték rendkívül kicsi, jóval kisebb az elfogadható 0.05 szignifikanciaszintnél. Ez azt sugallja, hogy a csoportok közötti különbség valószínűleg nem véletlen, és a mosolygós emojik használata szignifikánsan eltérő a csoportokban.
+A kapott statisztika és p-érték alapján látható, hogy van szignifikáns különbség a csoportok között a mosolygós emojik használatában. A p-érték rendkívül kicsi, jóval kisebb az elfogadható 0.05 szignifikanciaszintnél. Ez azt mutatja meg, hogy a csoportok közötti különbség valószínűleg nem véletlen, és a mosolygós emojik használata szignifikánsan eltérő a csoportokban.
 
 \chapter{3.feladat}
 A bead11.3.csv file egy felmérés adatait mutatja a mosolygós emojik használatának változásáról az elmúlt években egy adott online fórumon.
