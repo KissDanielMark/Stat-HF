@@ -42,7 +42,7 @@ Kimenet értelmezése:
   \end{center}
 \end{figure}
 Az alábbi kimenet a Figure 1.1-en látható. Az R-négyzet érték azt mutatja, hogy a modell mennyire magyarázza a függő változó (Boldogságszint) változását. Az 0.870 érték azt jelenti, hogy a modell 87\%-ban magyarázza a változást.
-P \> abs(t) (szignifikanciaszint): Az egyes együtthatók (const, Üzenet hossza, Mosolygós emojik száma) szignifikanciaszintje. Az értékek alattuk a p-értékeket jelentik. Azok az együtthatók, amelyek p-értéke kevesebb, mint 0.05, szignifikánsak a 0.05 szignifikanciaszinten. Ebben a modellben mind a const, mind a Mosolygós emojik száma szignifikáns, mivel a p-értékük kisebb, mint 0.05.
+abs(t) kisebb P (szignifikanciaszint): Az egyes együtthatók (const, Üzenet hossza, Mosolygós emojik száma) szignifikanciaszintje. Az értékek alattuk a p-értékeket jelentik. Azok az együtthatók, amelyek p-értéke kevesebb, mint 0.05, szignifikánsak a 0.05 szignifikanciaszinten. Ebben a modellben mind a const, mind a Mosolygós emojik száma szignifikáns, mivel a p-értékük kisebb, mint 0.05.
 Összességében ez azt jelenti, hogy a modell jól teljesít a magyarázatokban, és mind a konstans, mind a Mosolygós emojik szám változói szignifikánsan kapcsolódnak a Boldogságszint változóhoz.
 \section{b) feladat}
 Határozd meg és értelmezd a többszörös determináiós együtthatót!
@@ -57,8 +57,8 @@ Az R-négyzet mellett fontos megjegyezni az "Adj. R-squared" értéket is (itt 0
 Teszteld a regressziós modell megbízhatóságát 5\%-os szignifikanciaszinten!
 
 Megoldás:
-A nullhipotézis az, hogy a modell nem szignifikáns azaz nincs összefüggés az emojik és a boldogságszint között. A nullhipotézis elutasításához a p-értéknek kisebbnek kell lennie, mint a szignifikanciaszint (5\%).
-Az adott kimenetben a F-statistic értéke 157.5, és a hozzá tartozó p-érték a "Prob (F-statistic)" oszlopban található (1.46e-21). Ez az érték rendkívül kicsi, sok nagyságrenddel kisebb, mint 0.05 (5\%-os szignifikanciaszint), így elvetjük a nullhipotézist (azaz elfogadjuk a modell szignifikanciáját). Ez azt jelenti, hogy a modell összességében szignifikánsan jól illeszkedik adatainkhoz.
+A nullhipotézis(H0) az, hogy van összefüggés az emojik és a boldogságszint között, azaz nincs szignifikáns különbség, az ellenhipotézis az, hogy nincs összefüggés. A nullhipotézis elutasításához a p-értéknek nagyobbnak kell lennie, mint a szignifikanciaszint (5\%).
+Az adott kimenetben a F-statistic értéke 157.5, és a hozzá tartozó p-érték a "Prob (F-statistic)" oszlopban található (1.46e-21). Ez az érték rendkívül kicsi, sok nagyságrenddel kisebb, mint 0.05 (5\%-os szignifikanciaszint), így elfogadjuk a H0 nullhipotézist. Ez azt jelenti, hogy a modell összességében szignifikánsan jól illeszkedik adatainkhoz.
 
 
 \section{d) feladat}
@@ -103,21 +103,26 @@ A következő kutatás arra irányult, hogy mérje a mosolygós emojik használa
 Teszteld le, hogy van-e szignifikáns különbség a mosolygós emojik használatának gyakoriságában a különböző csoportokban (E = 0,05 szignifikanciaszinten)!
 
 Megoldás:
+
 Mielőtt statisztikai tesztet alkalmazom, megvizsgáltam a normalitást.
 Ehhez Shapiro-Wilk tesztet használtam. A p-érték alapján meghatározható, hogy az adott csoport normális eloszlású-e vagy sem.
-Ha a p-érték nagyobb, mint az alpha (0.05), akkor elfogadjuk a nullhipotézist, ami azt jelenti, hogy az adott csoport normális eloszlású.
-Ellenkező esetben elutasítjuk a nullhipotézist, és azt adott csoport nem normális eloszlású. A négy csoport közül egyik sem normális eloszlású, mivel a p-érték mindig kisebb, mint 0.05.
+A H0 hipotézis az, hogy az adott csoport normális eloszlású, az ellenhipotézis H1 az, hogy nem normális eloszlású.
+A négy csoport közül egyik sem normális eloszlású, mivel a p-érték mindig kisebb, mint 0.05, így a H0-t elvetjük.
 
-Ezt követően homogenitást kell ellenőrizni. Ehhez Levene tesztet használtam. A p-érték alapján eldönthetjük, hogy az adott csoportok varianciája azonos-e vagy sem.
-A teszt eredménye alapján a p-érték mindig nagyobb, mint 0.05, ami azt jelenti, hogy az adott csoportok varianciája azonos, azaz elfogadjuk a nullhipotézist és homogének az adatok.
+Ezt követően homogenitást kell ellenőrizni.
+Ehhez Levene tesztet használtam.
+A p-érték alapján eldönthetjük, hogy az adott csoportok varianciája azonos-e vagy sem.
+A H0 hipotézis az, hogy az adott csoportok varianciája azonos, az ellenhipotézis H1 az, hogy nem azonos.
+A teszt eredménye alapján a p-érték mindig nagyobb, mint 0.05, ami azt jelenti, hogy az adott csoportok varianciája azonos, azaz elfogadjuk a H0 nullhipotézist és homogének az adatok.
 
+Annak ellenére, hogy a 2 előfeltétel nem teljesült elvégeztem a statisztikai próbát.
 Ahhoz, hogy leellenőrizzem, van-e szignifikáns különbség a mosolygós emojik használatának gyakoriságában a különböző csoportokban, statisztikai tesztet kell alkalmazni.
 Mivel itt több csoportról van szó, egy análízis varianciát (ANOVA) használtam.
+A H0 nullhipotézis az, hogy nincs szignifikáns különbség a mosolygós emojik használatának gyakoriságában a különböző csoportokban, az ellenhipotézis H1 az, hogy van szignifikáns különbség.
 
 Kimenet értelmezése:
 Statisztika: 25.558435652569365, p-érték: 5.339953301217143e-14
-Van szignifikáns különbség a csoportok között a mosolygós emojik használatában.
-A kapott statisztika és p-érték alapján látható, hogy van szignifikáns különbség a csoportok között a mosolygós emojik használatában. A p-érték rendkívül kicsi, jóval kisebb az elfogadható 0.05 szignifikanciaszintnél. Ez azt mutatja meg, hogy a csoportok közötti különbség valószínűleg nem véletlen, és a mosolygós emojik használata szignifikánsan eltérő a csoportokban.
+A H0 nullhipotézist elvetjük, mivel a p érték sokkal kisebb, mint 0,05 így van szignifikáns különbség a csoportok között a mosolygós emojik használatában.
 
 \chapter{3.feladat}
 A bead11.3.csv file egy felmérés adatait mutatja a mosolygós emojik használatának változásáról az elmúlt években egy adott online fórumon.
