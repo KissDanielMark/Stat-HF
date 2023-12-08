@@ -131,12 +131,13 @@ A bead11.3.csv file egy felmérés adatait mutatja a mosolygós emojik használa
 Készíts idősor diagramot az adatok alapján, majd számold ki a tapasztalati autokorrelációs és parciális autokorrelációs függvényeket.
 
 Megoldás:
+A kimenet a Figure 3.1-en és a Figure 3.2-ön látható. Az idősor diagramon látható, hogy a mosolygós emojik használata az elmúlt években folyamatosan periodikusan ismétlődött.
 
 \begin{figure}%
   \centering
-  \subfloat[\centering Feladat 3/a kimenet]{{\includegraphics[width=7cm]{Figure_1.png} }}%
+  \subfloat[\centering Feladat 3/a kimenet - idősor diagram]{{\includegraphics[width=7cm]{Figure_1.png} }}%
   \qquad
-  \subfloat[\centering Feladat 3/a kimenet]{{\includegraphics[width=7cm]{Figure_2.png} }}%
+  \subfloat[\centering Feladat 3/a kimenet - ACF diagram]{{\includegraphics[width=7cm]{Figure_2.png} }}%
   \caption{Feladat 3/a kimenetei}%
   \label{fig:example}%
 \end{figure}
@@ -144,7 +145,7 @@ Megoldás:
 \begin{figure}[!ht]
   \begin{center}
     \includegraphics[scale=0.4]{Figure_3.png}
-    \caption{Feladat 3/a kimenet}
+    \caption{Feladat 3/a kimenet - PACF diagram}
     \label{fig:TexnicCenter}
   \end{center}
 \end{figure}
@@ -152,12 +153,14 @@ Megoldás:
 Az adatok transzformációjával és a trend, valamint a szezonális komponensek kiszűrésével kísérletezve illessz különböző idősor modelleket. Teszteld az illeszkedést.
 
 Megoldás:
+A megoldáshoz Holt-Winters idősor modellezést használtam majd ARIMA modellt illesztettem.
+A kimenet a Figure 3.3-on látható.
 
 \begin{figure}%
   \centering
-  \subfloat[\centering Feladat 3/b kimenet]{{\includegraphics[width=7cm]{Figure_5.png} }}%
+  \subfloat[\centering Feladat 3/b kimenet - ARIMA]{{\includegraphics[width=7cm]{Figure_5.png} }}%
   \qquad
-  \subfloat[\centering Feladat 3/b kimenet]{{\includegraphics[width=7cm]{Figure_6.png} }}%
+  \subfloat[\centering Feladat 3/b kimenet - Holt-Winters]{{\includegraphics[width=7cm]{Figure_6.png} }}%
   \caption{Feladat 3/b kimenetei}%
   \label{fig:example}%
 \end{figure}
@@ -166,6 +169,7 @@ Megoldás:
 Készíts előrejelzést a következő hónapokra várható mosolygós emojik használatára.
 
 Megoldás:
+A megoldáshoz a Holt-Winters idősor előrejelzést használtam. Az eredmény a Figure 3.4-en látható.
 
 \begin{figure}[!ht]
   \begin{center}
